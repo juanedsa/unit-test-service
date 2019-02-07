@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'unit-test-service';
+
+  public error = false;
+  public users;
+
+  constructor(public userService: UserService) {}
+
+  getUsers() {
+    this.userService.getUser().subscribe(users => this.users = users);
+  }
+
+  getUsersWithError() {
+    this.userService.getUserWithError().subscribe(users => console.log(users), error => {
+      console.error(error);
+      this.error = true;
+    });
+  }
 }

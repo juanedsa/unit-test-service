@@ -1,31 +1,47 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { throwError, of } from 'rxjs';
+import { UserService } from './user.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      imports: [HttpClientTestingModule],
+      declarations: [AppComponent],
+      providers: [UserService]
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'unit-test-service'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('unit-test-service');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to unit-test-service!');
+  });
+
+  describe('When getUsersWithError() is called', () => {
+    it('should handle error', () => {
+      spyOn(component.userService, 'getUserWithError').and.returnValue(throwError({ error: 'error' }));
+      component.getUsersWithError();
+      expect(component.error).toBeTruthy();
+    });
+
+    it('all should be fine', () => {
+      spyOn(component.userService, 'getUserWithError').and.returnValue(of({ users: [] }));
+      component.getUsersWithError();
+      expect(component.error).toBeFalsy();
+    });
+  });
+
+  describe('When getUsers() is called', () => {
+    it('all should be fine', () => {
+      const users = [1, 2, 3];
+      spyOn(component.userService, 'getUser').and.returnValue(of({ users }));
+      component.getUsers();
+      expect(component.error).toBeFalsy();
+      expect(component.users).toEqual({ users });
+    });
   });
 });
