@@ -9,11 +9,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUser() {
+  getUsers() {
     return this.http.get(this.url);
   }
 
-  getUserWithError() {
+  getUsersWithError() {
     return this.http.get(this.url + 'withError');
   }
 }

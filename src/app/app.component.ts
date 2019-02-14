@@ -13,14 +13,14 @@ export class AppComponent {
   constructor(public userService: UserService) {}
 
   getUsers() {
-    this.userService.getUser().subscribe(users => {
+    this.userService.getUsers().subscribe(users => {
       this.users = users;
       this.error = false;
     });
   }
 
   getUsersWithError() {
-    this.userService.getUserWithError().subscribe(
+    this.userService.getUsersWithError().subscribe(
       users => {
         this.users = users;
         this.error = false;
