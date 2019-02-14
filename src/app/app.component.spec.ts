@@ -20,28 +20,4 @@ describe('AppComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  describe('When getUsersWithError() is called', () => {
-    it('should handle error', () => {
-      spyOn(component.userService, 'getUserWithError').and.returnValue(throwError({ error: 'error' }));
-      component.getUsersWithError();
-      expect(component.error).toBeTruthy();
-    });
-
-    it('all should be fine', () => {
-      spyOn(component.userService, 'getUserWithError').and.returnValue(of({ users: [] }));
-      component.getUsersWithError();
-      expect(component.error).toBeFalsy();
-    });
-  });
-
-  describe('When getUsers() is called', () => {
-    it('all should be fine', () => {
-      const users = [1, 2, 3];
-      spyOn(component.userService, 'getUser').and.returnValue(of({ users }));
-      component.getUsers();
-      expect(component.error).toBeFalsy();
-      expect(component.users).toEqual({ users });
-    });
-  });
 });

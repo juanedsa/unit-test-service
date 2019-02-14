@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  url = 'https://jsonplaceholder.typicode.com/users';
+  private url = 'https://jsonplaceholder.typicode.com/users';
 
   constructor(private http: HttpClient) {}
 
@@ -14,6 +14,6 @@ export class UserService {
   }
 
   getUserWithError() {
-    return this.http.get(this.url + 'bad');
+    return this.http.get(this.url + 'withError');
   }
 }

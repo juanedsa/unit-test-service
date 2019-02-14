@@ -7,20 +7,28 @@ import { UserService } from './user.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
   public error = false;
   public users;
 
   constructor(public userService: UserService) {}
 
   getUsers() {
-    this.userService.getUser().subscribe(users => this.users = users);
+    this.userService.getUser().subscribe(users => {
+      this.users = users;
+      this.error = false;
+    });
   }
 
   getUsersWithError() {
-    this.userService.getUserWithError().subscribe(users => console.log(users), error => {
-      console.error(error);
-      this.error = true;
-    });
+    this.userService.getUserWithError().subscribe(
+      users => {
+        this.users = users;
+        this.error = false;
+      },
+      () => {
+        this.error = true;
+        this.users = [];
+      }
+    );
   }
 }

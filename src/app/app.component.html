@@ -1,11 +1,12 @@
-<button type="button" (click)="getUsers()">Get Users</button>
+<div class="container">
+  <div class="container__buttons">
+    <span class="link" (click)="getUsers()">😇 Get Users</span>
+    <span class="link link--error" (click)="getUsersWithError()">😈 Get Users With Error</span>
+  </div>
 
-<button type="button" (click)="getUsersWithError()">Get Users With Error</button>
+  <ul class="container__users">
+    <li class="user" *ngFor="let user of users">{{ user.name }}</li>
+  </ul>
 
-
-
-<ul *ngFor="let user of users">
-  <li>{{user.name}}</li>
-</ul>
-
-<p *ngIf="error">Error</p>
+  <p class="container__error" *ngIf="error">Error 😭</p>
+</div>
